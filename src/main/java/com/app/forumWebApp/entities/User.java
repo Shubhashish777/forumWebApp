@@ -4,18 +4,26 @@
 package com.app.forumWebApp.entities;
 
 import java.io.Serializable;
+import javax.persistence.JoinColumn;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-import org.springframework.lang.NonNull;
 
 /**
  * @author Shubhashish PC
@@ -29,26 +37,59 @@ public class User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 3418146846104388894L;
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long UserId;
+	
+	@Column(unique=true)
+	@NotBlank
+	@Size(max = 120)
 	private String UserName;
+	
+	@NotBlank
+	@Size(max = 120)
 	@Column(unique=true)
 	private String UserEmail;
+	
+	@NotBlank
+	@Size(max = 120,min=10)
+	private String password;
+	
+
 	private Instant UserAccountCreationDate;
 	private Long UserPostCount;
 	private Long UserCommentCount;
 	private ArrayList<Comment> CommentList;
 	private ArrayList<Post> PostList;
 	
+	@ManyToMany(cascade = {
+		    CascadeType.PERSIST,
+		    CascadeType.MERGE
+		})
+		@JoinTable(
+		    name = "User_Role",
+		    joinColumns = @JoinColumn(name = "UserId"),
+		    inverseJoinColumns = @JoinColumn(name = "id")
+		)
+	  private Set<Role> roles = new HashSet<>();
+	
+	
 	
 	
 	
 	
 	public Long getUserId()
-	
 	{
 		return UserId;
+	}
+	public void setUserAccountCreationDate(Instant userAccountCreationDate) {
+		UserAccountCreationDate = userAccountCreationDate;
 	}
 	public void setUserId(Long userId) {
 		UserId = userId;
