@@ -28,25 +28,7 @@ public class CommentController {
 	@Autowired
 	private UserService UserService;
 	
-	//GET Comment by id
-	@GetMapping("/{UserId}/Comment/{id}")
-	public Comment getComment(@PathVariable Long id)
-	{
-		Comment Comment = CommentService.getComment(id);
-		return Comment;
-		
-	}
-	
-	
-	//Create Comment 
-	@PostMapping("/Comment")
-	public Comment createComment(@RequestBody Comment Comment)
-	{
-	
-		Comment newComment = CommentService.createComment(Comment);
-		return newComment;
-		
-	}
+	//GET 
 	
 	
 	

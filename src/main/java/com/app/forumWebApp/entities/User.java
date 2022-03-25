@@ -5,6 +5,7 @@ package com.app.forumWebApp.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import javax.persistence.Column;
@@ -12,6 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+
+import org.springframework.lang.NonNull;
 
 /**
  * @author Shubhashish PC
@@ -31,11 +35,11 @@ public class User implements Serializable {
 	private String UserName;
 	@Column(unique=true)
 	private String UserEmail;
-	private Date UserAccountCreationDate;
+	private Instant UserAccountCreationDate;
 	private Long UserPostCount;
 	private Long UserCommentCount;
 	private ArrayList<Comment> CommentList;
-	
+	private ArrayList<Post> PostList;
 	
 	
 	
@@ -61,11 +65,12 @@ public class User implements Serializable {
 	public void setUserEmail(String userEmail) {
 		UserEmail = userEmail;
 	}
-	public Date getUserAccountCreationDate() {
+	public Instant getUserAccountCreationDate() {
 		return UserAccountCreationDate;
 	}
-	public void setUserAccountCreationDate(Date userAccountCreationDate) {
-		UserAccountCreationDate = userAccountCreationDate;
+	@PrePersist
+	public void setUserAccountCreationDate() {
+		UserAccountCreationDate =  Instant.now();
 	}
 	public Long getUserPostCount() {
 		return UserPostCount;
@@ -84,6 +89,12 @@ public class User implements Serializable {
 	}
 	public void setCommentList(ArrayList<Comment> commentList) {
 		CommentList = commentList;
+	}
+	public ArrayList<Post> getPostList() {
+		return PostList;
+	}
+	public void setPostList(ArrayList<Post> postList) {
+		PostList = postList;
 	}
 	
 	
