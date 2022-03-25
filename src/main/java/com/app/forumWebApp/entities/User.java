@@ -5,6 +5,7 @@ package com.app.forumWebApp.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,10 @@ import javax.persistence.Id;
 @Entity
 public class User implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3418146846104388894L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long UserId;
@@ -29,7 +34,16 @@ public class User implements Serializable {
 	private Date UserAccountCreationDate;
 	private Long UserPostCount;
 	private Long UserCommentCount;
-	public Long getUserId() {
+	private ArrayList<Comment> CommentList;
+	
+	
+	
+	
+	
+	
+	public Long getUserId()
+	
+	{
 		return UserId;
 	}
 	public void setUserId(Long userId) {
@@ -64,6 +78,12 @@ public class User implements Serializable {
 	}
 	public void setUserCommentCount(Long userCommentCount) {
 		UserCommentCount = userCommentCount;
+	}
+	public ArrayList<Comment> getCommentList() {
+		return CommentList;
+	}
+	public void setCommentList(ArrayList<Comment> commentList) {
+		CommentList = commentList;
 	}
 	
 	
