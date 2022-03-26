@@ -25,22 +25,46 @@ public class Role {
 	  private Long id;
 	  @Enumerated(EnumType.STRING)
 	  @Column(length = 20)
-	  private UserRole role;
+	  private UserRole name;
 	  
-	  
+	  public Role() {
+			
+		}
+
+	/**
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
+
+	public Role(Long id, UserRole name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public UserRole getRole() {
-		return role;
+
+	/**
+	 * @return the name
+	 */
+	public UserRole getName() {
+		return name;
 	}
-	public void setRole(UserRole role) {
-		this.role = role;
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(UserRole name) {
+		this.name = name;
 	}
-	  
+	
 	  
 
 }

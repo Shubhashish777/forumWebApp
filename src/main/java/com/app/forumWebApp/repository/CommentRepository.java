@@ -3,7 +3,7 @@
  */
 package com.app.forumWebApp.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.app.forumWebApp.entities.Comment;
 
@@ -11,6 +11,6 @@ import com.app.forumWebApp.entities.Comment;
  * @author Shubhashish PC
  *
  */
-public interface CommentRepository extends CrudRepository<Comment, Long> {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
 }

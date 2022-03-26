@@ -7,6 +7,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,9 @@ public class UserController {
 	public User createUser(@RequestBody User user)
 	{
 	
+//	    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//	    String encodedPassword = passwordEncoder.encode(user.getPassword());
+//	    user.setPassword(encodedPassword);
 		User newUser = userService.createUser(user);
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newUser.getUserId()).toUri();
 		ResponseEntity.created(location).build();

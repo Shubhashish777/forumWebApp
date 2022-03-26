@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,25 +26,26 @@ import javax.persistence.PrePersist;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+/*import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;*/
+
+
+
 
 /**
- * @author Shubhashish PC
+ * @author Shubhashish PC               
  *
  */
 
 @Entity
-public class User implements Serializable {
+public class User{ // implements UserDetails {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3418146846104388894L;
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long UserId;
@@ -68,21 +71,25 @@ public class User implements Serializable {
 	private ArrayList<Comment> CommentList;
 	private ArrayList<Post> PostList;
 	
-	@ManyToMany(cascade = {
-		    CascadeType.PERSIST,
-		    CascadeType.MERGE
-		})
-		@JoinTable(
-		    name = "User_Role",
-		    joinColumns = @JoinColumn(name = "UserId"),
-		    inverseJoinColumns = @JoinColumn(name = "id")
-		)
-	  private Set<Role> roles = new HashSet<>();
+//	@ManyToMany(cascade = {
+//		    CascadeType.PERSIST,
+//		    CascadeType.MERGE
+//		})
+//		@JoinTable(
+//		    name = "User_Role",
+//		    joinColumns = @JoinColumn(name = "UserId"),
+//		    inverseJoinColumns = @JoinColumn(name = "id")
+//		)
+//	  private Set<Role> roles = new HashSet<>();
 	
 	
 	
+	public User()
+	{
+		
+	}
 	
-	
+
 	
 	public Long getUserId()
 	{
@@ -137,6 +144,30 @@ public class User implements Serializable {
 	public void setPostList(ArrayList<Post> postList) {
 		PostList = postList;
 	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	/*
+	 * @Override public Collection<? extends GrantedAuthority> getAuthorities() {
+	 * return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")); }
+	 * 
+	 * 
+	 * @Override public boolean isAccountNonExpired() { return true; }
+	 * 
+	 * @Override public boolean isAccountNonLocked() { return true; }
+	 * 
+	 * @Override public boolean isCredentialsNonExpired() { return true; }
+	 * 
+	 * @Override public boolean isEnabled() { return true; }
+	 * 
+	 * 
+	 * @Override public String getUsername() { // TODO Auto-generated method stub
+	 * return null; }
+	 */
 	
 	
 	
