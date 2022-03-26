@@ -30,7 +30,6 @@ public class UserDTO {
 	@Size(max = 120,min=10)
 	private String password;
 	
-	private Set<Role> roles; 
 	
 	/**
 	 * @return the userName
@@ -77,16 +76,7 @@ public class UserDTO {
 	/**
 	 * @return the roles
 	 */
-	public Set<Role> getRoles() {
-		return roles;
-	}
-
-	/**
-	 * @param roles the roles to set
-	 */
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+	
 
 
 

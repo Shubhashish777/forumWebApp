@@ -26,6 +26,8 @@ import javax.persistence.PrePersist;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.app.forumWebApp.payload.UserDTO;
+
 /*import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;*/
@@ -39,7 +41,7 @@ import org.springframework.security.core.userdetails.UserDetails;*/
  */
 
 @Entity
-public class User{ // implements UserDetails {
+public class User implements Serializable{ // implements UserDetails {
 	
 	/**
 	 * 
@@ -71,16 +73,16 @@ public class User{ // implements UserDetails {
 	private ArrayList<Comment> CommentList;
 	private ArrayList<Post> PostList;
 	
-//	@ManyToMany(cascade = {
-//		    CascadeType.PERSIST,
-//		    CascadeType.MERGE
-//		})
-//		@JoinTable(
-//		    name = "User_Role",
-//		    joinColumns = @JoinColumn(name = "UserId"),
-//		    inverseJoinColumns = @JoinColumn(name = "id")
-//		)
-//	  private Set<Role> roles = new HashSet<>();
+	@ManyToMany(cascade = {
+		    CascadeType.PERSIST,
+		    CascadeType.MERGE
+		})
+		@JoinTable(
+		    name = "User_Role",
+		    joinColumns = @JoinColumn(name = "UserId"),
+		    inverseJoinColumns = @JoinColumn(name = "id")
+		)
+	  private Set<Role> roles = new HashSet<>();
 	
 	
 	
@@ -89,8 +91,15 @@ public class User{ // implements UserDetails {
 		
 	}
 	
-
+	public User(UserDTO user)
+	{
+		this.password=user.getPassword();
+		this.UserEmail=user.getUserEmail();
+		this.UserName=user.getUserName();
+		
+	}
 	
+
 	public Long getUserId()
 	{
 		return UserId;
@@ -150,24 +159,22 @@ public class User{ // implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	/*
-	 * @Override public Collection<? extends GrantedAuthority> getAuthorities() {
-	 * return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER")); }
-	 * 
-	 * 
-	 * @Override public boolean isAccountNonExpired() { return true; }
-	 * 
-	 * @Override public boolean isAccountNonLocked() { return true; }
-	 * 
-	 * @Override public boolean isCredentialsNonExpired() { return true; }
-	 * 
-	 * @Override public boolean isEnabled() { return true; }
-	 * 
-	 * 
-	 * @Override public String getUsername() { // TODO Auto-generated method stub
-	 * return null; }
+
+	/**
+	 * @return the roles
 	 */
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	/**
+	 * @param roles the roles to set
+	 */
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	
+	
 	
 	
 	
