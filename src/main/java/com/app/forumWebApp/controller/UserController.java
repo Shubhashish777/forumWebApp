@@ -36,6 +36,7 @@ import com.app.forumWebApp.config.JwtUtils;
 import com.app.forumWebApp.entities.User;
 import com.app.forumWebApp.payload.UserDTO;
 import com.app.forumWebApp.payload.UserLoginDTO;
+import com.app.forumWebApp.payload.UserResponseDTO;
 import com.app.forumWebApp.service.UserService;
 
 /**
@@ -63,9 +64,9 @@ public class UserController {
 	//GET User by id
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	@GetMapping("/user/{id}")
-	public User getUser(@PathVariable Long id)
+	public UserResponseDTO getUser(@PathVariable Long id)
 	{
-		User user = userService.getUser(id);
+		UserResponseDTO user = userService.getUser(id);
 		return user;
 		
 	}

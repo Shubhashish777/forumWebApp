@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.app.forumWebApp.entities.User;
+import com.app.forumWebApp.payload.UserResponseDTO;
 import com.app.forumWebApp.repository.UserRepository;
 
 /**
@@ -23,10 +24,10 @@ public class UserService  {
 	private UserRepository userRepo;
 	
 	
-	public User getUser (Long id)
+	public UserResponseDTO getUser (Long id)
 	{
 		Optional<User> User= userRepo.findById(id);
-		return User.get();
+		return  new UserResponseDTO(User.get());
 		
 	}
 	
