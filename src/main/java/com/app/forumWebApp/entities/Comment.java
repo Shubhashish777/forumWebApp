@@ -8,9 +8,17 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import net.minidev.json.annotate.JsonIgnore;
 
 /**
  * @author Shubhashish PC
@@ -27,6 +35,8 @@ public class Comment implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long commentId;
 	private Long parentCommentId;
+	
+
 	private Long parentPostId;
 	
 	//How to sort Child comments efficiently and in real time?
@@ -34,6 +44,8 @@ public class Comment implements Serializable {
 	private Date creationDate;
 	private Date lastUpdatedDate;
 	private String content;
+	private String UserId;
+	
 	
 	
 	
@@ -79,6 +91,12 @@ public class Comment implements Serializable {
 	}
 	public void setParentPostId(Long parentPostId) {
 		this.parentPostId = parentPostId;
+	}
+	public String getUserId() {
+		return UserId;
+	}
+	public void setUserId(String userId) {
+		UserId = userId;
 	}
 	
 	

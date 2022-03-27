@@ -4,6 +4,7 @@
 package com.app.forumWebApp.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,10 +35,12 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.app.forumWebApp.Responses.MessageResponse;
 import com.app.forumWebApp.config.AuthEntryPointJwt;
 import com.app.forumWebApp.config.JwtUtils;
+import com.app.forumWebApp.entities.Post;
 import com.app.forumWebApp.entities.User;
 import com.app.forumWebApp.payload.UserDTO;
 import com.app.forumWebApp.payload.UserLoginDTO;
 import com.app.forumWebApp.payload.UserResponseDTO;
+import com.app.forumWebApp.service.PostService;
 import com.app.forumWebApp.service.UserService;
 
 /**
@@ -59,6 +63,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PostService postService;
 	
 	
 	//GET User by id
@@ -90,10 +97,12 @@ public class UserController {
 	//Login User
 	@PostMapping("/user/signin")
 	  public ResponseEntity<MessageResponse> authenticateUser(@Valid @RequestBody UserLoginDTO loginRequest) {
-		logger.debug(loginRequest.getUserName());
+		
+ 
+
+		jwtUtils.getCleanJwtCookie();
 	    Authentication authentication = authenticationManager
 	        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUserName(), loginRequest.getPassword()));
-	    logger.trace(authentication.toString());
 	    SecurityContextHolder.getContext().setAuthentication(authentication);
 	    User userDetails = (User) authentication.getPrincipal();
 	    ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
@@ -108,6 +117,7 @@ public class UserController {
 
 	
 	
+	  //LogOut User
 	  @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	  @PostMapping("/user/signout")
 	  public ResponseEntity<MessageResponse> logoutUser() {
@@ -118,6 +128,32 @@ public class UserController {
 	        .body(new MessageResponse("You've been signed out!"));
 	  }
 	
+	  
+	  
+	    //Create Posts
+		@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+		@PostMapping("/user/post")
+		public Post createPost(@RequestBody  Post post)
+		{
+			User currentUser= (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+			post.setUser(currentUser);
+			Post newPost= postService.createPost(post);
+			ArrayList<Long>temp=currentUser.getPostList();
+			if (temp==null)
+			{
+				temp= new ArrayList<Long>();
+			}
+			temp.add(newPost.getPostId());
+			currentUser.setPostList(temp);
+			userService.createUser(currentUser);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{UserId}/{id}").buildAndExpand(currentUser.getUserName(),newPost.getPostId()).toUri();
+			ResponseEntity.created(location).build();
+			return newPost;	
+		}
+		
+	
+		
 	
 
 }

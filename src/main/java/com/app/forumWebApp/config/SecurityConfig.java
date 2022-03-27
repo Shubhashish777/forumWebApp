@@ -76,7 +76,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
             .authorizeRequests()
 	             .antMatchers(HttpMethod.GET, "/user/**").hasAnyAuthority("ROLE_USER")
+	             .antMatchers(HttpMethod.GET, "/board/**").hasAnyAuthority("ROLE_USER")
+	             .antMatchers(HttpMethod.GET, "/posts/**").hasAnyAuthority("ROLE_USER")
 	             .antMatchers(HttpMethod.POST, "/user/signin").permitAll()
+	             .antMatchers(HttpMethod.GET, "/home").permitAll()
 	             .antMatchers(HttpMethod.POST, "/user/signup").permitAll().anyRequest().authenticated().and().csrf().disable();  
 	        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	    

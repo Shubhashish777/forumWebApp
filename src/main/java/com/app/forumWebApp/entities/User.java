@@ -31,6 +31,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.app.forumWebApp.payload.UserDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /*import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -74,10 +75,13 @@ public class User implements UserDetails{ // implements UserDetails {
 	private Instant UserAccountCreationDate;
 	private Long UserPostCount;
 	private Long UserCommentCount;
-	private ArrayList<Comment> CommentList;
-	private ArrayList<Post> PostList;
+
+	private ArrayList<Long> CommentList;
 	
-	@ManyToMany(cascade = {
+	
+	private ArrayList<Long> PostList;
+	
+	/*@ManyToMany(cascade = {
 		    CascadeType.PERSIST,
 		    CascadeType.MERGE
 		})
@@ -86,7 +90,7 @@ public class User implements UserDetails{ // implements UserDetails {
 		    joinColumns = @JoinColumn(name = "UserId"),
 		    inverseJoinColumns = @JoinColumn(name = "id")
 		)
-	  private Set<Role> roles = new HashSet<>();
+	  private Set<Role> roles = new HashSet<>();*/
 	
 	
 	
@@ -145,18 +149,7 @@ public class User implements UserDetails{ // implements UserDetails {
 	public void setUserCommentCount(Long userCommentCount) {
 		UserCommentCount = userCommentCount;
 	}
-	public ArrayList<Comment> getCommentList() {
-		return CommentList;
-	}
-	public void setCommentList(ArrayList<Comment> commentList) {
-		CommentList = commentList;
-	}
-	public ArrayList<Post> getPostList() {
-		return PostList;
-	}
-	public void setPostList(ArrayList<Post> postList) {
-		PostList = postList;
-	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -167,16 +160,14 @@ public class User implements UserDetails{ // implements UserDetails {
 	/**
 	 * @return the roles
 	 */
-	public Set<Role> getRoles() {
-		return roles;
-	}
+	//public Set<Role> getRoles() {
+	//	return roles;}
 
 	/**
 	 * @param roles the roles to set
 	 */
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+	//public void setRoles(Set<Role> roles) {
+	//	this.roles = roles;}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -213,6 +204,22 @@ public class User implements UserDetails{ // implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public ArrayList<Long> getCommentList() {
+		return CommentList;
+	}
+
+	public void setCommentList(ArrayList<Long> commentList) {
+		CommentList = commentList;
+	}
+
+	public ArrayList<Long> getPostList() {
+		return PostList;
+	}
+
+	public void setPostList(ArrayList<Long> postList) {
+		PostList = postList;
 	}
 	
 	

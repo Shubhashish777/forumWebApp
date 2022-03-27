@@ -28,8 +28,8 @@ public class UserResponseDTO {
 	private Instant UserAccountCreationDate;
 	private Long UserPostCount;
 	private Long UserCommentCount;
-	private ArrayList<Comment> CommentList;
-	private ArrayList<Post> PostList;
+	private ArrayList<Long> CommentList;
+	private ArrayList<Long> PostList;
 	
 	
 	
@@ -95,25 +95,25 @@ public class UserResponseDTO {
 	/**
 	 * @return the commentList
 	 */
-	public ArrayList<Comment> getCommentList() {
+	public ArrayList<Long> getCommentList() {
 		return CommentList;
 	}
 	/**
 	 * @param commentList the commentList to set
 	 */
-	public void setCommentList(ArrayList<Comment> commentList) {
+	public void setCommentList(ArrayList<Long> commentList) {
 		CommentList = commentList;
 	}
 	/**
 	 * @return the postList
 	 */
-	public ArrayList<Post> getPostList() {
+	public ArrayList<Long> getPostList() {
 		return PostList;
 	}
 	/**
 	 * @param postList the postList to set
 	 */
-	public void setPostList(ArrayList<Post> postList) {
+	public void setPostList(ArrayList<Long> postList) {
 		PostList = postList;
 	}
 	

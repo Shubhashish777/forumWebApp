@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.app.forumWebApp.entities.User;
 import com.app.forumWebApp.payload.UserResponseDTO;
 import com.app.forumWebApp.repository.UserRepository;
@@ -17,6 +19,7 @@ import com.app.forumWebApp.repository.UserRepository;
  *
  */
 @Service
+@Transactional
 public class UserService  {
 	
 	
