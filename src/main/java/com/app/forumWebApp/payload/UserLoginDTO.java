@@ -14,24 +14,24 @@ public class UserLoginDTO {
 	
 	@NotBlank
 	@Size(max = 120)
-	private String UserEmail;
+	private String UserName;
 	
 	@NotBlank
 	@Size(max = 120,min=10)
 	private String password;
 
 	/**
-	 * @return the userEmail
+	 * @return the userName
 	 */
-	public String getUserEmail() {
-		return UserEmail;
+	public String getUserName() {
+		return UserName;
 	}
 
 	/**
-	 * @param userEmail the userEmail to set
+	 * @param userName the userName to set
 	 */
-	public void setUserEmail(String userEmail) {
-		UserEmail = userEmail;
+	public void setUserName(String userName) {
+		UserName = userName;
 	}
 
 	/**

@@ -3,12 +3,13 @@
  */
 package com.app.forumWebApp.service;
 
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.app.forumWebApp.entities.User;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.app.forumWebApp.repository.UserRepository;
 
 /**
@@ -16,27 +17,23 @@ import com.app.forumWebApp.repository.UserRepository;
  *
  */
 @Service
-public class UserService  {
-	
-	
+public class UserRepositoryUserDetailsService implements UserDetailsService {
+
 	@Autowired
 	private UserRepository userRepo;
 	
 	
-	public User getUser (Long id)
-	{
-		Optional<User> User= userRepo.findById(id);
-		return User.get();
-		
-	}
 	
-	public User createUser(User user)
-	{
+	@Override
+	@Transactional
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
 		
-		
-		return userRepo.save(user);
+		return userRepo.findByUsername(username);
 	}
-	
+
+
+
 	
 
 }
